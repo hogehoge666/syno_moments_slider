@@ -1,0 +1,60 @@
+.info {
+    position: absolute;
+    top: 1%;
+    left: 1%;
+}
+
+.btn-start {
+    position: absolute;
+    top: 1%;
+    left: 1%;
+}
+
+.btn-close {
+    position: absolute;
+    top: 1%;
+    right: 1%;
+}
+
+.btn-prev {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    width: 15%;
+    height: 60%;
+    transform: translate(0%, -50%);
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.btn-next {
+    position: absolute;
+    top: 50%;
+    right: 0%;
+    width: 15%;
+    height: 60%;
+    transform: translate(0%, -50%);
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.btn-pause {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30%;
+    height: 60%;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.photo {
+    height: 100%;
+    width: auto;
+    display: block;
+    margin: auto;
+}

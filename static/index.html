@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <link href="./style.css" rel="stylesheet">
+    <title>Synology Moments Photo Slider</title>
+</head>
+
+<body>
+    <!-- Button trigger modal -->
+    <button id="start" type="button" class="btn btn-primary btn-start" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Start Slideshow
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-body bg-light">
+                    <h5 class="info text-black-50" id="info"></h5>
+                    <button type="button" class="btn-close btn-stop" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                    <button type="button" id="prev" class="btn-prev h1 text-black-50">&lt;</button>
+                    <button type="button" id="next" class="btn-next h1 text-black-50">&gt;</button>
+                    <button type="button" id="pause" class="btn-pause h1 text-light"></button>
+                    <img id="photo" class="photo" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+
+    <script src="./index.js" type="module"></script>
+</body>
+
+</html>
