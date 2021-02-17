@@ -1,4 +1,4 @@
-# Synology Moments Photo Slider for smart phone
+# Synology Moments Photo Slider for Smart Phone
 
 Under development
 
@@ -10,7 +10,7 @@ LICENSE: MIT
 
 - simple photo slider that shows few sample photos from unsplash
 - you can modify photo-gateway.js to display any list of photo
-- no support for Synology DSM yet
+- no support for Synology Moments yet
 
 ### how to use
 
