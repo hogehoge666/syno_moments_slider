@@ -31,6 +31,10 @@ class PhotoList {
         }
     }
 
+    reset() {
+        this._counter = 0;
+    }
+
     get() {
         if (this._counterMax === 0) {
             return '';

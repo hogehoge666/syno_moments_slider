@@ -10,10 +10,15 @@ import PhotoTimer from './photo-timer.js';
         photos.next();
         showPhoto(photos.get());
     }, 3);
+    let btnPause = null;
 
     document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('start').addEventListener('click', () => {
             startSlideshow();
+        });
+
+        document.getElementById('stop').addEventListener('click', () => {
+            stopSlideshow();
         });
 
         document.getElementById('next').addEventListener('click', () => {
@@ -24,9 +29,9 @@ import PhotoTimer from './photo-timer.js';
             showPreviousPhoto();
         }, false);
 
-        const btnPause = document.getElementById('pause');
+        btnPause = document.getElementById('pause');
         btnPause.addEventListener('click', () => {
-            togglePauseAndPlay(btnPause);
+            togglePauseAndPlay();
         }, false);
 
     }, false);
@@ -34,6 +39,12 @@ import PhotoTimer from './photo-timer.js';
     function startSlideshow() {
         showPhoto(photos.get());
         timer.start();
+    }
+
+    function stopSlideshow() {
+        btnPause.innerHTML = '';
+        photos.reset();
+        timer.stop();
     }
 
     function showNextPhoto() {
@@ -52,7 +63,7 @@ import PhotoTimer from './photo-timer.js';
         }
     }
 
-    function togglePauseAndPlay(btnPause) {
+    function togglePauseAndPlay() {
         if (timer.isMoving) {
             timer.stop();
             btnPause.innerHTML = 'Play';

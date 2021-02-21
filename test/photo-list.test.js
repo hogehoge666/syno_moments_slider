@@ -47,6 +47,12 @@ describe('PhotoList', () => {
         photos.next();
         expect(photos.get()).toBe('B');
     });
+
+    it('should return counter to zero if reset', () => {
+        photos.next();
+        photos.reset();
+        expect(photos.position()).toBe(0);
+    });
 });
 
 describe('Empty PhotoList', () => {
