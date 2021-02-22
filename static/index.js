@@ -1,85 +1,48 @@
-import PhotoGW from './photo-gateway.js'
+import SimplePhotoGW from './simple-photo/gateway.js'
 import PhotoList from './photo-list.js';
 import PhotoTimer from './photo-timer.js';
+import Slider from './slider.js';
+import SimpleView from './simple-photo/view.js';
+
 
 (function () {
 
-    const list = PhotoGW.getPhotos();
+    const list = SimplePhotoGW.getPhotos();
     const photos = new PhotoList(list);
     const timer = new PhotoTimer(() => {
         photos.next();
-        showPhoto(photos.get());
+        view.show(photos.get());
     }, 3);
+    const view = new SimpleView();
+    const slider = new Slider(photos, timer, view);
+
     let btnPause = null;
+    const togglePauseAndPlayMessage = (message) => {
+        btnPause.innerHTML = message;
+    };
 
     document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('start').addEventListener('click', () => {
-            startSlideshow();
+            slider.start();
         });
 
-        document.getElementById('stop').addEventListener('click', () => {
-            stopSlideshow();
+        document.getElementById('stop').addEventListener('click', () => {  
+            slider.stop(togglePauseAndPlayMessage);
         });
 
         document.getElementById('next').addEventListener('click', () => {
-            showNextPhoto();
+            slider.next();
         }, false);
 
         document.getElementById('prev').addEventListener('click', () => {
-            showPreviousPhoto();
+            slider.prev();
         }, false);
 
         btnPause = document.getElementById('pause');
         btnPause.addEventListener('click', () => {
-            togglePauseAndPlay();
+            slider.togglePauseAndPlay(togglePauseAndPlayMessage);
         }, false);
-
     }, false);
-
-    function startSlideshow() {
-        showPhoto(photos.get());
-        timer.start();
-    }
-
-    function stopSlideshow() {
-        btnPause.innerHTML = '';
-        photos.reset();
-        timer.stop();
-    }
-
-    function showNextPhoto() {
-        photos.next();
-        showPhoto(photos.get());
-        if (timer.isMoving) {
-            timer.reset();
-        }
-    }
-
-    function showPreviousPhoto() {
-        photos.prev();
-        showPhoto(photos.get());
-        if (timer.isMoving) {
-            timer.reset();
-        }
-    }
-
-    function togglePauseAndPlay() {
-        if (timer.isMoving) {
-            timer.stop();
-            btnPause.innerHTML = 'Play';
-        } else {
-            photos.next();
-            showPhoto(photos.get());
-            timer.start();
-            btnPause.innerHTML = '';
-        }
-    }
-
-    function showPhoto(photo) {
-        document.getElementById('photo').src = photo.url;
-        document.getElementById('info').innerHTML = photo.date;
-        console.log(photo);
-    }
 
 })();
 

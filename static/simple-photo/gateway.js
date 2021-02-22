@@ -1,4 +1,4 @@
-class PhotoGW {
+class SimplePhotoGW {
     static getPhotos() {
         return [
             {
@@ -21,4 +21,4 @@ class PhotoGW {
     }
 }
 
-export default PhotoGW;
+export default SimplePhotoGW;
