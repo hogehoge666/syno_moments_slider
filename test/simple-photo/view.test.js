@@ -13,9 +13,6 @@ describe('SimpleView', () => {
         global.document.getElementById.mockClear();
         view = new SimpleView();
     });
-    it('should have show method', () => {
-        expect(typeof view.show).toBe('function');
-    });
 
     describe('show', () => {
         it('should populate ID photo and ID info', () => {
