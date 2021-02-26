@@ -1,6 +1,6 @@
 import MomentsPhotoGW from '../../static/moments/gateway';
-import MomentsView from '../../static/moments/view';
-import ENV from '../../static/env.json';
+import MomentsSliderView from '../../static/moments/slider-view';
+import ENV from '../../static/env/env.json.js';
 jest.mock('../../static/moments/gateway');
 const nodeFetch = require('node-fetch');
 global.fetch = require('fetch-cookie')(nodeFetch);
@@ -19,7 +19,7 @@ describe('MomentsView', () => {
         MomentsPhotoGW.mockClear();
         global.document.getElementById.mockClear();
         gw = new MomentsPhotoGW(ENV.SYNO_ADDRESS, ENV.SYNO_PORT, ENV.SYNO_USER, ENV.SYNO_PASSWORD);
-        view = new MomentsView(gw);
+        view = new MomentsSliderView(gw);
     });
 
     describe('getPhotoInBase64', () => {
@@ -60,5 +60,13 @@ describe('MomentsView', () => {
             expect(view.getPhotoInBase64).toHaveBeenCalledTimes(1);
             expect(view.displayView).toHaveBeenCalledTimes(1);
         });        
+    });
+
+    describe('setPauseAndPlayMessage', () => {
+        it('should call set pause message', () => {
+            view.setPauseAndPlayMessage('test');
+            expect(global.document.getElementById).toHaveBeenCalledTimes(1);
+            expect(global.document.getElementById).toHaveBeenCalledWith('pause');
+        });
     });
 });

@@ -9,24 +9,58 @@ class MomentsPhotoGW {
         }
     }
 
-    getPhotos() {
-        return [
-            {
-                "cache_key": "9431_1610339138",
-                "id": 9431,
-                "date": "1/11/2021"
-            },
-            {
-                "cache_key": "9394_1610172030",
-                "id": 9394,
-                "date": "1/9/2021"
-            },
-            {
-                "cache_key": "9393_1610172025",
-                "id": 9393,
-                "date": "1/9/2021"
+    getPhotoList(startInputDate, endInputDate) {
+        return this.getPhotosFromMoments(startInputDate, endInputDate)
+            .then((detailList) => this.summarize(detailList))
+            .then((summaryList) => summaryList.reverse());
+    }
+
+    summarize(momentsDetailList) {
+        return momentsDetailList.data.list.map((value, key, array) => {
+            return {
+                cache_key: value.additional.thumbnail.cache_key,
+                date: this.convertMomentsTimeToStrDate(value.time),
+                id: value.id
             }
-        ];
+        });
+    }
+
+    getPhotosFromMoments(startInputDate, endInputDate) {
+        const startTime = this.convertInputDateToStartMomentsTime(startInputDate);
+        const endTime = this.convertInputDateToEndMomentsTime(endInputDate);
+        const targetUrl = `${this.synoHost}/webapi/entry.cgi?api="SYNO.Photo.Browse.Item"&version=3&method="list"&start_time=${startTime}&end_time=${endTime}&additional=["thumbnail","resolution","orientation","video_convert","video_meta"]&offset=0&limit=5000`;
+        return this.getData(targetUrl);
+    }
+
+    convertInputDateToStartMomentsTime(dateDashed) {
+        return this.convertInputDateToMomentsTime(dateDashed, '00:00:00');
+    }
+
+    convertInputDateToEndMomentsTime(dateDashed) {
+        return this.convertInputDateToMomentsTime(dateDashed, '23:59:59');
+    }
+
+    convertInputDateToMomentsTime(dateDashed, time) {
+        return this.convertToUnixUTCTime(dateDashed, time);
+    }
+
+    convertToUnixUTCTime(dateDashed, time) {
+        const [yearStr, monthStr, dateStr] = dateDashed.split('-');
+        const [hoursStr, minutesStr, secondsStr] = time.split(':');
+        const utcTime = Date.UTC(Number(yearStr), Number(monthStr) - 1, Number(dateStr),
+            Number(hoursStr), Number(minutesStr), Number(secondsStr));
+        return utcTime / 1000;
+    }
+
+    convertMomentsTimeToStrDate(momentsTime) {
+        const date = new Date(momentsTime * 1000);
+        const utcYear = date.getUTCFullYear();
+        const utcMonth = date.getUTCMonth() + 1;
+        const utcDate = date.getUTCDate();
+        const utcHours = date.getUTCHours();
+        const utcMins = date.getUTCMinutes();
+        const utcSecs = date.getUTCSeconds();
+        return `${utcYear}/${utcMonth}/${utcDate} ${utcHours}:${utcMins}:${utcSecs}`;
     }
 
     login() {

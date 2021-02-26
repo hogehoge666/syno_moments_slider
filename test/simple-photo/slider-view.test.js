@@ -1,4 +1,4 @@
-import SimpleView from '../../static/simple-photo/view'
+import SimpleSliderView from '../../static/simple-photo/slider-view'
 global.document.getElementById = jest.fn();
 global.document.getElementById.mockImplementation(() => {
     return {
@@ -11,7 +11,7 @@ describe('SimpleView', () => {
     let view = null;
     beforeEach(() => {
         global.document.getElementById.mockClear();
-        view = new SimpleView();
+        view = new SimpleSliderView();
     });
 
     describe('show', () => {
@@ -23,6 +23,14 @@ describe('SimpleView', () => {
             expect(global.document.getElementById).toHaveBeenCalledTimes(2);
             expect(global.document.getElementById).toHaveBeenNthCalledWith(1, 'photo')
             expect(global.document.getElementById).toHaveBeenNthCalledWith(2, 'info');
+        });
+    });
+
+    describe('setPauseAndPlayMessage', () => {
+        it('should call set pause message', () => {
+            view.setPauseAndPlayMessage('test');
+            expect(global.document.getElementById).toHaveBeenCalledTimes(1);
+            expect(global.document.getElementById).toHaveBeenCalledWith('pause');
         });
     });
 });

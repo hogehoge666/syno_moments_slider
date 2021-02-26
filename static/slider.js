@@ -1,8 +1,8 @@
 class Slider {
-    constructor(photos, timer, view) {
+    constructor(photos, timer, sliderView) {
         this.photos = photos;
         this.timer = timer;
-        this.view = view;
+        this.view = sliderView;
     }
 
     start() {
@@ -10,8 +10,8 @@ class Slider {
         this.timer.start();
     }
 
-    stop(togglePauseAndPlayMessage) {
-        togglePauseAndPlayMessage('');
+    stop() {
+        this.view.setPauseAndPlayMessage('');
         this.photos.reset();
         this.timer.stop();
     }
@@ -32,15 +32,15 @@ class Slider {
         }
     }
 
-    togglePauseAndPlay(togglePauseAndPlayMessage) {
+    togglePauseAndPlay() {
         if (this.timer.isMoving) {
             this.timer.stop();
-            togglePauseAndPlayMessage('Play');
+            this.view.setPauseAndPlayMessage('Play');
         } else {
             this.photos.next();
             this.view.show(this.photos.get());
             this.timer.start();
-            togglePauseAndPlayMessage('');
+            this.view.setPauseAndPlayMessage('');
         }
     }
 }

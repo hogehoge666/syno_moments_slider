@@ -1,44 +1,51 @@
-// import SimplePhotoGW from './simple-photo/gateway.js'
-// import SimpleView from './simple-photo/view.js';
 import MomentsPhotoGW from './moments/gateway.js';
-import MomentsView from './moments/view.js';
+import MomentsSliderView from './moments/slider-view.js';
 import PhotoList from './photo-list.js';
-import PhotoTimer from './photo-timer.js';
+import PhotoTimer from './timer.js';
 import Slider from './slider.js';
-import ENV from './env.json.js';
+import ENV from './env/env.json.js';
+import MomentsPhotoListGetter from "./moments/photo-list-getter.js";
+import HomeView from "./home-view.js";
 
 
 (function () {
+    let photoList = [];
+    let slider = null;
 
-    // const gw = new SimplePhotoGW();
     const gw = new MomentsPhotoGW(ENV.SYNO_ADDRESS, ENV.SYNO_PORT, ENV.SYNO_USER, ENV.SYNO_PASSWORD);
-    const list = gw.getPhotos();
+    const homeView = new HomeView();
+    const getter = new MomentsPhotoListGetter(gw, homeView)
 
-    const photos = new PhotoList(list);
-
-    const timer = new PhotoTimer(() => {
-        photos.next();
-        view.show(photos.get());
-    }, 3);
-
-    // const view = new SimpleView();
-    const view = new MomentsView(gw);
-
-    const slider = new Slider(photos, timer, view);
-
-    let btnPause = null;
-    const togglePauseAndPlayMessage = (message) => {
-        btnPause.innerHTML = message;
-    };
+    async function getPhotoListFromMoments() {
+        const inputStartDate = document.getElementById('start-date').value;
+        const inputEndDate = document.getElementById('end-date').value;
+        return getter.getPhotoList(inputStartDate, inputEndDate);
+    }
 
     document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('start-date').addEventListener('change', async () => {
+            photoList = await getPhotoListFromMoments();
+        });
+
+        document.getElementById('end-date').addEventListener('change', async () => {
+            photoList = await getPhotoListFromMoments();
+        });
+
         document.getElementById('start').addEventListener('click', () => {
+            const photos = new PhotoList(photoList);
+            const interval = document.getElementById('interval').value;
+            const timer = new PhotoTimer(() => {
+                photos.next();
+                sliderView.show(photos.get());
+            }, interval);
+            const sliderView = new MomentsSliderView(gw);
+            slider = new Slider(photos, timer, sliderView);
             gw.login();
             slider.start();
         });
 
-        document.getElementById('stop').addEventListener('click', () => {
-            slider.stop(togglePauseAndPlayMessage);
+        document.getElementById('close').addEventListener('click', () => {
+            slider.stop();
             gw.logout();
         });
 
@@ -50,9 +57,8 @@ import ENV from './env.json.js';
             slider.prev();
         }, false);
 
-        btnPause = document.getElementById('pause');
-        btnPause.addEventListener('click', () => {
-            slider.togglePauseAndPlay(togglePauseAndPlayMessage);
+        document.getElementById('pause').addEventListener('click', () => {
+            slider.togglePauseAndPlay();
         }, false);
     }, false);
 

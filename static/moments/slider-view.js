@@ -1,6 +1,11 @@
-class MomentsView {
+class MomentsSliderView {
     constructor(momentsPhotoGateway) {
         this.gw = momentsPhotoGateway;
+    }
+
+    show(photo) {
+        this.getPhotoInBase64(photo)
+            .then((photoInBase64) => this.displayView(photoInBase64, photo.date))
     }
 
     getPhotoInBase64(photo){
@@ -12,10 +17,9 @@ class MomentsView {
         document.getElementById('info').innerHTML = date;
     }
 
-    show(photo) {
-        this.getPhotoInBase64(photo)
-        .then((photoInBase64) => this.displayView(photoInBase64, photo.date))
+    setPauseAndPlayMessage(message) {
+        document.getElementById('pause').innerHTML = message;
     }
 }
 
-export default MomentsView;
+export default MomentsSliderView;

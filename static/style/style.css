@@ -1,0 +1,72 @@
+.date {
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+.interval {
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+.info {
+  position: absolute;
+  top: 1%;
+  left: 1%;
+}
+
+.btn-close {
+  position: absolute;
+  bottom: 2%;
+  right: 2%;
+  width: 30px;
+  height: 30px;
+  background-color: gray;
+}
+
+.btn-prev {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 15%;
+  height: 30%;
+  transform: translate(0%, -50%);
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.btn-next {
+  position: absolute;
+  top: 50%;
+  right: 0%;
+  width: 15%;
+  height: 30%;
+  transform: translate(0%, -50%);
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.btn-pause {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30%;
+  height: 30%;
+  transform: translate(-50%, -50%);
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.photo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 95vh;
+  width: auto;
+  display: block;
+}

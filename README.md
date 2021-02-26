@@ -115,3 +115,74 @@ Ran all test suites.
 ```
 
 ---
+
+## v0.3 : 3rd MVP release
+
+### description
+
+- simple photo slider that shows photos from Moments
+- specify date range of the photos at home view
+- yet to be refactored
+
+### how to use
+
+- put following files under "static" on web server and access the file using browser
+  - home-view.js
+  - index.html
+  - index.js
+  - photo-list.js
+  - slider.js
+  - timer.js
+  - style/style.css
+  - moments/gateway.js
+  - moments/photo-list-getter.js
+  - moments/slider-view.js
+
+- create env.json.js under static/env
+
+```
+const ENV = {
+    SYNO_ADDRESS: '192.168.1.1',
+    SYNO_PORT: 15000,
+    SYNO_USER: 'momentsuser',
+    SYNO_PASSWORD: 'momentspass'
+};
+
+export default ENV;
+```
+
+### unit test
+
+##### moments/gateway.js
+- line 77, 139
+  - error handling scenario that is hard to create
+- line 118
+  - code that is only executed in browser, but not in Node.js
+
+```
+-----------------------|---------|----------|---------|---------|-------------------
+File                   | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-----------------------|---------|----------|---------|---------|-------------------
+All files              |   98.11 |       92 |   98.44 |   98.11 |                   
+ static                |     100 |      100 |     100 |     100 |                   
+  home-view.js         |     100 |      100 |     100 |     100 |                   
+  photo-list.js        |     100 |      100 |     100 |     100 |                   
+  slider.js            |     100 |      100 |     100 |     100 |                   
+  timer.js             |     100 |      100 |     100 |     100 |                   
+ static/env            |     100 |      100 |     100 |     100 |                   
+  env.json.js          |     100 |      100 |     100 |     100 |                   
+ static/moments        |   96.91 |    86.67 |    97.5 |   96.91 |                   
+  gateway.js           |   95.52 |    81.82 |      96 |   95.52 | 111,118,139       
+  photo-list-getter.js |     100 |      100 |     100 |     100 |                   
+  slider-view.js       |     100 |      100 |     100 |     100 |                   
+ static/simple-photo   |     100 |      100 |     100 |     100 |                   
+  gateway.js           |     100 |      100 |     100 |     100 |                   
+  slider-view.js       |     100 |      100 |     100 |     100 |                   
+-----------------------|---------|----------|---------|---------|-------------------
+Test Suites: 9 passed, 9 total
+Tests:       53 passed, 53 total
+Snapshots:   0 total
+Time:        14.042 s
+Ran all test suites.
+
+```

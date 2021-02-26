@@ -1,4 +1,4 @@
-import PhotoTimer from '../static/photo-timer'
+import PhotoTimer from '../static/timer'
 
 describe('PhotoTimer', () => {
 
