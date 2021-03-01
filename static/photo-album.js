@@ -1,11 +1,11 @@
-class PhotoList {
+class PhotoAlbum {
     constructor(_photoList) {
         this._photoList = _photoList;
         this._counter = 0;
         if (!_photoList) {
-            this._counterMax = 0;
+            this._size = 0;
         } else {
-            this._counterMax = _photoList.length;
+            this._size = _photoList.length;
         }
     }
 
@@ -13,21 +13,21 @@ class PhotoList {
         return this._counter;
     }
 
-    getCounterMax() {
-        return this._counterMax;
+    getSize() {
+        return this._size;
     }
 
     next() {
-        if (++this._counter === this._counterMax || this._counterMax === 0) {
+        if (++this._counter === this._size || this._size === 0) {
             this._counter = 0;
         }
     }
 
     prev() {
-        if (this._counterMax === 0) {
+        if (this._size === 0) {
             this._counter = 0;
         } else if (--this._counter < 0) {
-            this._counter = this._counterMax - 1;
+            this._counter = this._size - 1;
         }
     }
 
@@ -36,11 +36,11 @@ class PhotoList {
     }
 
     get() {
-        if (this._counterMax === 0) {
+        if (this._size === 0) {
             return '';
         }
         return this._photoList[this._counter];
     }
 }
 
-export default PhotoList;
+export default PhotoAlbum;

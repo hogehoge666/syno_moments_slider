@@ -1,64 +1,68 @@
-import MomentsPhotoGW from './moments/gateway.js';
-import MomentsSliderView from './moments/slider-view.js';
-import PhotoList from './photo-list.js';
-import PhotoTimer from './timer.js';
-import Slider from './slider.js';
+import FetchAjaxConnection from "./fetch-ajax-connection.js";
+import DateRangePhotoListGateway from './date-range-photo-list-gateway.js';
+import DateRangeMenuController from "./date-range-menu-controller.js";
+import HomeMenuView from "./home-menu-view.js";
+import DateRangeMenuView from "./date-range-menu-view.js";
+import PhotoAlbum from './photo-album.js';
 import ENV from './env/env.json.js';
-import MomentsPhotoListGetter from "./moments/photo-list-getter.js";
-import HomeView from "./home-view.js";
+import HomeMenuController from "./home-menu-controller.js";
 
 
 (function () {
-    let photoList = [];
-    let slider = null;
 
-    const gw = new MomentsPhotoGW(ENV.SYNO_ADDRESS, ENV.SYNO_PORT, ENV.SYNO_USER, ENV.SYNO_PASSWORD);
-    const homeView = new HomeView();
-    const getter = new MomentsPhotoListGetter(gw, homeView)
+    let album = null;
 
-    async function getPhotoListFromMoments() {
+    let homeMenuController = null;
+    let sliderMenuController = null;
+
+    const homeMenuView = new HomeMenuView();
+    const dateRangeMenuView = new DateRangeMenuView();
+    const ajaxConnection = new FetchAjaxConnection(ENV.SYNO_ADDRESS, ENV.SYNO_PORT, ENV.SYNO_USER, ENV.SYNO_PASSWORD);
+    const dateRangePhotoListGateway = new DateRangePhotoListGateway(ajaxConnection);
+    const dateRangeMenuController = new DateRangeMenuController(homeMenuView, dateRangeMenuView, dateRangePhotoListGateway);
+
+    async function pullPhotoListFromMoments() {
         const inputStartDate = document.getElementById('start-date').value;
         const inputEndDate = document.getElementById('end-date').value;
-        return getter.getPhotoList(inputStartDate, inputEndDate);
+        const photoList = await dateRangeMenuController.getPhotoList(inputStartDate, inputEndDate);
+        album = new PhotoAlbum(photoList);
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('start-date').addEventListener('change', async () => {
-            photoList = await getPhotoListFromMoments();
+        // listeners for Date Range Select Menu
+        document.getElementById('start-date').addEventListener('change', () => {
+            pullPhotoListFromMoments();
         });
 
-        document.getElementById('end-date').addEventListener('change', async () => {
-            photoList = await getPhotoListFromMoments();
+        document.getElementById('end-date').addEventListener('change', () => {
+            pullPhotoListFromMoments();
         });
 
+        // listeners for Home menu
         document.getElementById('start').addEventListener('click', () => {
-            const photos = new PhotoList(photoList);
+            homeMenuController = new HomeMenuController(ajaxConnection);
             const interval = document.getElementById('interval').value;
-            const timer = new PhotoTimer(() => {
-                photos.next();
-                sliderView.show(photos.get());
-            }, interval);
-            const sliderView = new MomentsSliderView(gw);
-            slider = new Slider(photos, timer, sliderView);
-            gw.login();
-            slider.start();
+            homeMenuController.startSlideshow(album, interval);
+            sliderMenuController = homeMenuController.getSliderController();
         });
 
+        // listeners for slideshow buttons
         document.getElementById('close').addEventListener('click', () => {
-            slider.stop();
-            gw.logout();
+            homeMenuController.endSlideshow();
+            homeMenuController = null;
+            sliderMenuController = null;
         });
 
         document.getElementById('next').addEventListener('click', () => {
-            slider.next();
+            sliderMenuController.next();
         }, false);
 
         document.getElementById('prev').addEventListener('click', () => {
-            slider.prev();
+            sliderMenuController.prev();
         }, false);
 
         document.getElementById('pause').addEventListener('click', () => {
-            slider.togglePauseAndPlay();
+            sliderMenuController.togglePlayAndPause();
         }, false);
     }, false);
 
