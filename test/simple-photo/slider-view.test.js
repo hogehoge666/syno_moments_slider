@@ -1,4 +1,5 @@
-import SimpleSliderView from '../../static/simple-photo/slider-view'
+import SimpleSliderView from '../../static/simple-photo/slider-view';
+
 global.document.getElementById = jest.fn();
 global.document.getElementById.mockImplementation(() => {
     return {
@@ -7,16 +8,16 @@ global.document.getElementById.mockImplementation(() => {
     };
 });
 
-describe.skip('SimpleView', () => {
-    let view = null;
+describe('SimpleView', () => {
+    let simpleSliderView = null;
     beforeEach(() => {
         global.document.getElementById.mockClear();
-        view = new SimpleSliderView();
+        simpleSliderView = new SimpleSliderView();
     });
 
     describe('show', () => {
         it('should populate ID photo and ID info', () => {
-            view.show({
+            simpleSliderView.show({
                 url: 'some url',
                 date: 'some date'
             });
@@ -26,9 +27,9 @@ describe.skip('SimpleView', () => {
         });
     });
 
-    describe('setPauseAndPlayMessage', () => {
+    describe('setPlayPauseMessage', () => {
         it('should call set pause message', () => {
-            view.setPlayPauseMessage('test');
+            simpleSliderView.setPlayPauseMessage('test');
             expect(global.document.getElementById).toHaveBeenCalledTimes(1);
             expect(global.document.getElementById).toHaveBeenCalledWith('pause');
         });

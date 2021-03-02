@@ -28,7 +28,7 @@ describe('SliderView', () => {
             const date = 'some date';
             sliderView.setDateMessage('test');
             expect(global.document.getElementById).toHaveBeenCalledTimes(1);
-            expect(global.document.getElementById).toHaveBeenCalledWith('info');
+            expect(global.document.getElementById).toHaveBeenCalledWith('date-message');
         });
     });
 

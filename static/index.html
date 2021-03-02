@@ -37,11 +37,11 @@
     <div class="row py-3">
       <div class="col-md-5 py-2">
         <h6 class="text-center">Start Date: </h6>
-        <input class="date" type="date" id="start-date">
+        <input class="date-input" type="date" id="start-date">
       </div>
       <div class="col-md-5 py-2">
         <h6 class="text-center">End Date: </h6>
-        <input class="date" type="date" id="end-date">
+        <input class="date-input" type="date" id="end-date">
       </div>
       <div class="col-md-2 py-2">
         <h6 class="text-center">Interval:</h6>
@@ -67,11 +67,12 @@
       <div class="modal-content">
         <div class="modal-body bg-light">
           <img id="photo" class="photo" alt="">
-          <h5 class="info text-black-50" id="info"></h5>
+          <h5 class="date-message text-black-50" id="date-message"></h5>
           <button id="close" type="button" class="btn-close btn-stop" data-bs-dismiss="modal" aria-label="Close"></button>
           <button type="button" id="prev" class="btn-prev h1 text-black-50">&lt;</button>
           <button type="button" id="next" class="btn-next h1 text-black-50">&gt;</button>
           <button type="button" id="pause" class="btn-pause h1 text-light"></button>
+          <button id="info-toggle" type="button" class="btn-info-toggle rounded-circle btn-outline-primary">Info</button>
         </div>
       </div>
     </div>

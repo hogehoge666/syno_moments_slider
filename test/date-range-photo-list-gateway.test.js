@@ -10,29 +10,29 @@ const testValidPathQuery = '/webapi/entry.cgi?api="SYNO.Photo.Browse.Item"&versi
 
 describe('DateRangePhotoListGateway', () => {
 
-    let gw = null;
+    let photoListGateway = null;
     beforeEach(() => {
         const ajaxConnection = new FetchAjaxConnection(ENV.SYNO_ADDRESS, ENV.SYNO_PORT, ENV.SYNO_USER, ENV.SYNO_PASSWORD);
-        gw = new DateRangePhotoListGateway(ajaxConnection);
+        photoListGateway = new DateRangePhotoListGateway(ajaxConnection);
     });
 
     afterEach(() => {
-        gw.disconnect();
+        photoListGateway.disconnect();
     });
 
     it('should convert an input date to beginning of the day in Unix UTC time', () => {
-        expect(gw.convertInputDateToStartMomentsTime('2021-01-09')).toBe(1610150400);
+        expect(photoListGateway.convertInputDateToStartMomentsTime('2021-01-09')).toBe(1610150400);
     });
 
     it('should convert a date to end of the day in Unix UTC time', () => {
-        expect(gw.convertInputDateToEndMomentsTime('2021-01-10')).toBe(1610323199);
+        expect(photoListGateway.convertInputDateToEndMomentsTime('2021-01-10')).toBe(1610323199);
     });
 
 
     describe('find', () => {
         it('should return list of photos taken in given period that includes cache_key, id, and time', () => {
-           return gw.connect()
-               .then(() => gw.find(testValidStartDate, testValidEndDate))
+           return photoListGateway.connect()
+               .then(() => photoListGateway.find(testValidStartDate, testValidEndDate))
                .then((list) => {
                    expect(list.length).toBeGreaterThan(0);
                    expect(list[0].cache_key).toBeDefined();
@@ -44,10 +44,10 @@ describe('DateRangePhotoListGateway', () => {
 
     describe('login and logout', () => {
         it('should login to Momemnts and logout from Moments', () => {
-            return gw.connect()
+            return photoListGateway.connect()
                 .then((success) => {
                     expect(success).toBeTruthy();
-                    return gw.disconnect();
+                    return photoListGateway.disconnect();
                 })
                 .then((success) => {
                     expect(success).toBeTruthy();
@@ -57,8 +57,9 @@ describe('DateRangePhotoListGateway', () => {
         // slow test.  may skip in development.
         it.skip('should return rejected Promise when login failed', () => {
             jest.setTimeout(10000);
-            const gw = new DateRangePhotoListGateway(ENV.SYNO_ADDRESS, ENV.SYNO_PORT, 'wronguser', 'wrongpass');
-            return expect(gw.connect()).rejects.toBe('Login Failed.');
+            const ajaxConnection = new FetchAjaxConnection(ENV.SYNO_ADDRESS, ENV.SYNO_PORT, 'wronguser', 'wrongpass');
+            const photoListGateway = new DateRangePhotoListGateway(ajaxConnection);
+            return expect(photoListGateway.connect()).rejects.toBe('Login Failed.');
         });
     });
 });

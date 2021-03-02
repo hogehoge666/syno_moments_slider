@@ -1,4 +1,4 @@
-class DateRangeMenuView {
+class DateRangeSelectMenuView {
     changeMaxOfStartDateInput(inputEndDate) {
         document.getElementById('start-date').max = inputEndDate;
     }
@@ -8,4 +8,4 @@ class DateRangeMenuView {
     }
 }
 
-export default DateRangeMenuView;
+export default DateRangeSelectMenuView;

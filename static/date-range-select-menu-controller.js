@@ -1,9 +1,9 @@
-import MenuController from "./menu-controller.js";
+import SelectMenuController from "./select-menu-controller.js";
 
-class DateRangeMenuController extends MenuController{
-    constructor(homeView, dateRangeMenuView, dateRangePhotoListGateway) {
+class DateRangeSelectMenuController extends SelectMenuController{
+    constructor(homeView, dateRangeSelectMenuView, dateRangePhotoListGateway) {
         super(homeView);
-        this.dateRangeMenuView = dateRangeMenuView;
+        this.dateRangeSelectMenuView = dateRangeSelectMenuView;
         this.dateRangePhotoListGateway = dateRangePhotoListGateway;
     }
 
@@ -21,8 +21,8 @@ class DateRangeMenuController extends MenuController{
     }
 
     changeMinMaxOfDateInput(inputStartDate, inputEndDate) {
-        this.dateRangeMenuView.changeMaxOfStartDateInput(inputEndDate);
-        this.dateRangeMenuView.changeMinOfEndDateInput(inputStartDate);
+        this.dateRangeSelectMenuView.changeMaxOfStartDateInput(inputEndDate);
+        this.dateRangeSelectMenuView.changeMinOfEndDateInput(inputStartDate);
     }
 
     validateDateInput(inputStartDate, inputEndDate) {
@@ -47,4 +47,4 @@ class DateRangeMenuController extends MenuController{
 
 }
 
-export default DateRangeMenuController;
+export default DateRangeSelectMenuController;

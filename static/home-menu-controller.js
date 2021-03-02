@@ -20,15 +20,18 @@ class HomeMenuController {
         this.sliderMenuController.start();
     }
 
+    // Todo: Need to decompose to make it more testable.
+    //       Callback is not covered.
     prepare(album, interval) {
         const timer = new PhotoTimer(() => {
             album.next();
             displayPhoto.do();
         }, interval);
         const sliderView = new SliderView();
-        const displayDate = new DisplayDateCommand(sliderView);
         const displayImage = new DisplayImageCommand(sliderView, this.photoGateway);
-        const displayPhoto = new DisplayPhotoCommands(album, displayDate, displayImage);
+        const displayDate = new DisplayDateCommand(sliderView);
+        const infoCommandsList = [[displayDate], []];
+        const displayPhoto = new DisplayPhotoCommands(album, displayImage, infoCommandsList);
         const displayPlayPauseMessage = new DisplayPlayPauseMessage(sliderView);
         this.sliderMenuController = new SliderMenuController(album, timer, displayPhoto, displayPlayPauseMessage);
     }

@@ -1,15 +1,31 @@
 class DisplayPhotoCommands {
-    constructor(album, displayDate, displayImage) {
+    constructor(album, displayImage, infoCommandList) {
         this.album = album;
-        this.displayDate = displayDate;
         this.displayImage = displayImage;
+        this.infoCommandsList = infoCommandList;
+        this.counter = 0;
     }
 
     do() {
-        // Todo: use promise all
         const photo = this.getCurrentAlbumPhoto();
-        this.displayImage.do(photo.cache_key, photo.id);
-        this.displayDate.do(photo.time);
+        this.displayImage.do(photo);
+        this.displayInfo(photo);
+    }
+
+    displayInfo(photo) {
+        this.infoCommandsList[this.counter].forEach((value, index, array) => {
+            value.do(photo);
+        });
+    }
+
+    toggleInfo(){
+        this.displayInfo();
+        this.counter++;
+        if(this.counter === this.infoCommandsList.length) {
+            this.counter = 0;
+        }
+        const photo = this.getCurrentAlbumPhoto();
+        this.displayInfo(photo);
     }
 
     getCurrentAlbumPhoto() {

@@ -1,4 +1,4 @@
-.date {
+.date-input {
   position: relative;
   left: 50%;
   transform: translate(-50%, 0%);
@@ -10,10 +10,20 @@
   transform: translate(-50%, 0%);
 }
 
-.info {
+.date-message {
   position: absolute;
   top: 1%;
   left: 1%;
+}
+
+.btn-info-toggle {
+  position: absolute;
+  bottom: 2%;
+  left: 2%;
+  width: 45px;
+  height: 45px;
+  background-color: transparent;
+  outline: none;
 }
 
 .btn-close {

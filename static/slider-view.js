@@ -4,7 +4,7 @@ class SliderView {
     }
 
     setDateMessage(date) {
-        document.getElementById('info').innerHTML = date;
+        document.getElementById('date-message').innerHTML = date;
     }
 
     setPlayPauseMessage(message) {

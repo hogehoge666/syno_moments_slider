@@ -1,8 +1,8 @@
 import FetchAjaxConnection from "./fetch-ajax-connection.js";
 import DateRangePhotoListGateway from './date-range-photo-list-gateway.js';
-import DateRangeMenuController from "./date-range-menu-controller.js";
+import DateRangeSelectMenuController from "./date-range-select-menu-controller.js";
 import HomeMenuView from "./home-menu-view.js";
-import DateRangeMenuView from "./date-range-menu-view.js";
+import DateRangeSelectMenuView from "./date-range-select-menu-view.js";
 import PhotoAlbum from './photo-album.js';
 import ENV from './env/env.json.js';
 import HomeMenuController from "./home-menu-controller.js";
@@ -16,15 +16,15 @@ import HomeMenuController from "./home-menu-controller.js";
     let sliderMenuController = null;
 
     const homeMenuView = new HomeMenuView();
-    const dateRangeMenuView = new DateRangeMenuView();
+    const dateRangeSelectMenuView = new DateRangeSelectMenuView();
     const ajaxConnection = new FetchAjaxConnection(ENV.SYNO_ADDRESS, ENV.SYNO_PORT, ENV.SYNO_USER, ENV.SYNO_PASSWORD);
     const dateRangePhotoListGateway = new DateRangePhotoListGateway(ajaxConnection);
-    const dateRangeMenuController = new DateRangeMenuController(homeMenuView, dateRangeMenuView, dateRangePhotoListGateway);
+    const dateRangeSelectMenuController = new DateRangeSelectMenuController(homeMenuView, dateRangeSelectMenuView, dateRangePhotoListGateway);
 
     async function pullPhotoListFromMoments() {
         const inputStartDate = document.getElementById('start-date').value;
         const inputEndDate = document.getElementById('end-date').value;
-        const photoList = await dateRangeMenuController.getPhotoList(inputStartDate, inputEndDate);
+        const photoList = await dateRangeSelectMenuController.getPhotoList(inputStartDate, inputEndDate);
         album = new PhotoAlbum(photoList);
     }
 
@@ -63,6 +63,10 @@ import HomeMenuController from "./home-menu-controller.js";
 
         document.getElementById('pause').addEventListener('click', () => {
             sliderMenuController.togglePlayAndPause();
+        }, false);
+
+        document.getElementById('info-toggle').addEventListener('click', () => {
+            sliderMenuController.toggleInfo();
         }, false);
     }, false);
 

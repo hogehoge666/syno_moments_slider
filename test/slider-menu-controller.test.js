@@ -8,7 +8,6 @@ jest.mock('../static/photo-album');
 jest.mock('../static/timer');
 jest.mock("../static/display-photo-commands");
 jest.mock("../static/display-play-pause-message");
-
 jest.mock('../static/slider-view');
 
 
@@ -101,6 +100,13 @@ describe('SliderMenuController', () => {
             expect(PhotoTimer.mock.instances[0].start).toHaveBeenCalledTimes(1);
             expect(DisplayPlayPauseMessage.mock.instances[0].do).toHaveBeenCalledTimes(1);
             expect(DisplayPlayPauseMessage.mock.instances[0].do).toHaveBeenCalledWith('');
+        });
+    });
+
+    describe('toggleInfo', () => {
+        it('should call DisplayPhotoCommand.toggleInfo', () => {
+            sliderController.toggleInfo();
+            expect(DisplayPhotoCommands.mock.instances[0].toggleInfo).toHaveBeenCalledTimes(1);
         });
     });
 });

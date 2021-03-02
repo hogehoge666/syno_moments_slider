@@ -18,7 +18,7 @@ class PhotoGateway extends Gateway {
                     }
                 }
                 if (result instanceof Blob) {
-                    return result;
+                    return Promise.resolve(result);
                 } else if (!result.success && result.error.code === 119) {
                     console.log('Reauthenticate');
                     return this.connect()
@@ -26,27 +26,6 @@ class PhotoGateway extends Gateway {
                 }
             });
     }
-
-    // Todo: move to DisplayImageCommand
-    // convertBlobToBase64(blob) {
-    //     return new Promise((resolve, reject) => {
-    //         const reader = new FileReader;
-    //         reader.onerror = () => {
-    //             reject('Error Converting An Image to Base64 Format:' + cacheKey);
-    //         };
-    //         reader.onloadend = () => {
-    //             resolve(reader.result);
-    //         };
-    //         if (typeof process === 'undefined') {
-    //             // For browser
-    //             reader.readAsDataURL(blob);
-    //         } else {
-    //             // For passing Jest
-    //             const blobNode = new Blob(blob.buffer, { type: blob.type });
-    //             reader.readAsDataURL(blobNode);
-    //         }
-    //     });
-    // }
 }
 
 export default PhotoGateway;

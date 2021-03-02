@@ -3,9 +3,15 @@ class DisplayDateCommand {
         this.sliderView = sliderView;
     }
 
-    do(time) {
-        const date = this.convertMomentsTimeToStrDate(time);
-        this.sliderView.setDateMessage(date);
+    do(photo) {
+        return new Promise((resolve) => {
+            let date = '';
+            if (typeof photo !== 'undefined' && typeof photo.time !== 'undefined') {
+                date = this.convertMomentsTimeToStrDate(photo.time);
+            }
+            this.sliderView.setDateMessage(date);
+            resolve();
+        });
     }
 
     convertMomentsTimeToStrDate(time) {
@@ -13,9 +19,9 @@ class DisplayDateCommand {
         const utcYear = date.getUTCFullYear();
         const utcMonth = date.getUTCMonth() + 1;
         const utcDate = date.getUTCDate();
-        const utcHours = date.getUTCHours();
-        const utcMinutes = date.getUTCMinutes();
-        const utcSecs = date.getUTCSeconds();
+        const utcHours = ('0' + date.getUTCHours()).slice(-2);
+        const utcMinutes = ('0' + date.getUTCMinutes()).slice(-2);
+        const utcSecs = ('0' + date.getUTCSeconds()).slice(-2);
         return `${utcYear}/${utcMonth}/${utcDate} ${utcHours}:${utcMinutes}:${utcSecs}`;
     }
 }

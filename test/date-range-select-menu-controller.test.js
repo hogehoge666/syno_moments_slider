@@ -1,25 +1,25 @@
-import DateRangeMenuController from '../static/date-range-menu-controller'
+import DateRangeSelectMenuController from '../static/date-range-select-menu-controller'
 import DateRangePhotoListGateway from "../static/date-range-photo-list-gateway";
 import HomeMenuView from "../static/home-menu-view";
-import DateRangeMenuView from "../static/date-range-menu-view"
+import DateRangeSelectMenuView from "../static/date-range-select-menu-view"
 jest.mock("../static/date-range-photo-list-gateway");
 jest.mock("../static/home-menu-view");
-jest.mock("../static/date-range-menu-view");
+jest.mock("../static/date-range-select-menu-view");
 
 
-describe('DateRangeMenuController', () => {
+describe('DateRangeSelectMenuController', () => {
     let controller = null;
     let homeView = null;
-    let dateRangeMenuView = null;
+    let dateRangeSelectMenuView = null;
     let dateRangePhotoListGateway = null;
     beforeEach(() => {
         HomeMenuView.mockClear();
-        DateRangeMenuView.mockClear();
+        DateRangeSelectMenuView.mockClear();
         DateRangePhotoListGateway.mockClear();
         homeView = new HomeMenuView();
-        dateRangeMenuView = new DateRangeMenuView();
+        dateRangeSelectMenuView = new DateRangeSelectMenuView();
         dateRangePhotoListGateway = new DateRangePhotoListGateway();
-        controller = new DateRangeMenuController(homeView, dateRangeMenuView, dateRangePhotoListGateway);
+        controller = new DateRangeSelectMenuController(homeView, dateRangeSelectMenuView, dateRangePhotoListGateway);
     });
 
     describe('getPhotoList', () => {

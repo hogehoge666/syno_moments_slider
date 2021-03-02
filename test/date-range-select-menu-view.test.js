@@ -1,4 +1,4 @@
-import DateRangeMenuView from "../static/date-range-menu-view";
+import DateRangeSelectMenuView from "../static/date-range-select-menu-view";
 
 global.document.getElementById = jest.fn();
 global.document.getElementById.mockImplementation(() => {
@@ -10,7 +10,7 @@ global.document.getElementById.mockImplementation(() => {
 
 let dateRangeMenuView = null;
 beforeEach(() => {
-    dateRangeMenuView = new DateRangeMenuView();
+    dateRangeMenuView = new DateRangeSelectMenuView();
     global.document.getElementById.mockClear();
 });
 

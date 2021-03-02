@@ -5,7 +5,7 @@ class SimpleSliderView {
         console.log(photo);
     }
 
-    setPauseAndPlayMessage(message) {
+    setPlayPauseMessage(message) {
         document.getElementById('pause').innerHTML = message;
     }
 }

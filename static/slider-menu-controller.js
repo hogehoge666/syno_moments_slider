@@ -44,6 +44,10 @@ class SliderMenuController {
             this.displayPlayPauseMessage.do('');
         }
     }
+
+    toggleInfo() {
+        this.displayPhoto.toggleInfo();
+    }
 }
 
 export default SliderMenuController;
